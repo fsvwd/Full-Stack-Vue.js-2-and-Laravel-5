@@ -3,7 +3,7 @@
         <div class="hr"></div>
         <div :class="containerClass">
             <p>
-                <img class="icon" src="/images/logo_grey.png">
+                <img class="icon" :src="logoUrl">
                 <span><strong>Vuebnb</strong>. A full-stack Vue.js and Laravel demo app.</span>
             </p>
         </div>
@@ -14,6 +14,9 @@
         computed: {
             containerClass() {
                 return `${this.$route.name}-container`;
+            },
+            logoUrl() {
+                return `${window.cdn_url || ''}images/logo_grey.png`;
             }
         },
     }

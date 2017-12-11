@@ -1,28 +1,24 @@
 <template>
     <div>
-        <header-image
-                :image-url="listing.images[0]"
-                @header-clicked="openModal"
-                :id="listing.id"
-        ></header-image>
+        <header-image v-if="images[0]" :image-url="images[0]" @header-clicked="openModal"></header-image>
         <div class="listing-container">
             <div class="heading">
-                <h1>{{ listing.title }}</h1>
-                <p>{{ listing.address }}</p>
+                <h1>{{ title }}</h1>
+                <p>{{ address }}</p>
             </div>
             <hr>
             <div class="about">
                 <h3>About this listing</h3>
-                <expandable-text>{{ listing.about }}</expandable-text>
+                <expandable-text>{{ about }}</expandable-text>
             </div>
             <div class="lists">
-                <feature-list title="Amenities" :items="listing.amenities">
+                <feature-list title="Amenities" :items="amenities">
                     <template slot-scope="amenity">
                         <i class="fa fa-lg" :class="amenity.icon"></i>
                         <span>{{ amenity.title }}</span>
                     </template>
                 </feature-list>
-                <feature-list title="Prices" :items="listing.prices">
+                <feature-list title="Prices" :items="prices">
                     <template slot-scope="price">
                         {{ price.title }}: <strong>{{ price.value }}</strong>
                     </template>
@@ -30,11 +26,12 @@
             </div>
         </div>
         <modal-window ref="imagemodal">
-            <image-carousel :images="listing.images"></image-carousel>
+            <image-carousel :images="images"></image-carousel>
         </modal-window>
     </div>
 </template>
 <script>
+    import routeMixin from '../js/route-mixin';
     import { populateAmenitiesAndPrices } from '../js/helpers';
 
     import ImageCarousel from './ImageCarousel.vue';
@@ -44,6 +41,17 @@
     import ExpandableText from './ExpandableText.vue';
 
     export default {
+        mixins: [ routeMixin ],
+        data() {
+            return {
+                title: null,
+                about: null,
+                address: null,
+                amenities: [],
+                prices: [],
+                images: []
+            }
+        },
         components: {
             ImageCarousel,
             ModalWindow,
@@ -51,14 +59,10 @@
             HeaderImage,
             ExpandableText
         },
-        computed: {
-            listing() {
-                return populateAmenitiesAndPrices(
-                        this.$store.getters.getListing(this.$route.params.listing)
-                );
-            }
-        },
         methods: {
+            assignData({ listing }) {
+                Object.assign(this.$data, populateAmenitiesAndPrices(listing));
+            },
             openModal() {
                 this.$refs.imagemodal.modalOpen = true;
             }
@@ -66,20 +70,6 @@
     }
 </script>
 <style>
-    .heading {
-        margin-bottom: 2em;
-    }
-
-    .heading h1 {
-        font-size: 32px;
-        font-weight: 700;
-    }
-
-    .heading p {
-        font-size: 15px;
-        color: rgb(118, 118, 118);
-    }
-
     .about {
         margin: 2em 0;
     }

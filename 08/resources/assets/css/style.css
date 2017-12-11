@@ -31,28 +31,18 @@ body {
   }
 }
 
-.saved-container {
-  margin: 0 auto;
-  padding: 0 25px;
+.heading {
+  margin-bottom: 2em;
 }
 
-@media (min-width: 1131px) {
-  .saved-container {
-    width: 1095px;
-    padding-left: 40px;
-    margin-bottom: -10px;
-  }
+.heading h1 {
+  font-size: 32px;
+  font-weight: 700;
 }
 
-.login-container {
-  margin: 0 auto;
-  padding: 0 12px;
-}
-
-@media (min-width: 374px) {
-  .login-container {
-    width: 350px;
-  }
+.heading p {
+  font-size: 15px;
+  color: rgb(118, 118, 118);
 }
 
 hr {
@@ -77,8 +67,4 @@ button {
   font-size: 14px;
   display: inline-block;
   margin-bottom: 0;
-}
-
-input[type=text] {
-  -webkit-appearance: none;
 }

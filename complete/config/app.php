@@ -230,4 +230,9 @@ return [
 
     ],
 
+    'cdn' => [
+        'bypass' => env('CDN_BYPASS', false),
+        'url' => env('CDN_URL')
+    ]
+
 ];

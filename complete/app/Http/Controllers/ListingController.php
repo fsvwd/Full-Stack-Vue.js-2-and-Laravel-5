@@ -12,7 +12,7 @@ class ListingController extends Controller
     {
         $model = $listing->toArray();
         for($i = 1; $i <=4; $i++) {
-            $model['image_' . $i] = asset('images/' . $listing->id . '/Image_' . $i . '.jpg');
+            $model['image_' . $i] = cdn('images/' . $listing->id . '/Image_' . $i . '.jpg');
         }
         return collect(['listing' => $model]);
     }
@@ -45,7 +45,7 @@ class ListingController extends Controller
             'id', 'address', 'title', 'price_per_night'
         ]);
         $collection->transform(function($listing) {
-            $listing->thumb = asset(
+            $listing->thumb = cdn(
                 'images/' . $listing->id . '/Image_1_thumb.jpg'
             );
             return $listing;

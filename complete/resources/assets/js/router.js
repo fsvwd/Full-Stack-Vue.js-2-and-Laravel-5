@@ -24,7 +24,7 @@ let router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let serverData = JSON.parse(window.vuebnb_server_data) || {};
+  let serverData = JSON.parse(window.vuebnb_server_data);
   if (to.name === 'saved' && !store.state.auth) {
     next('/login')
   } else if (
